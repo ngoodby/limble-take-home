@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 export interface Comment {
   id: number;
   text: string;
-  userID: number | null;
 }
 
 export interface User {
@@ -12,7 +11,7 @@ export interface User {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommentService {
   private comments: Comment[] = [];
@@ -20,7 +19,7 @@ export class CommentService {
     { userID: 1, name: 'Kevin' },
     { userID: 2, name: 'Jeff' },
     { userID: 3, name: 'Bryan' },
-    { userID: 4, name: 'Gabbey' }
+    { userID: 4, name: 'Gabbey' },
   ];
 
   getComments() {
@@ -32,29 +31,34 @@ export class CommentService {
   }
 
   addComment(text: string) {
-    const user = this.detectUserMention(text);
+    const users = this.detectUserMentions(text);
     const comment: Comment = {
       id: this.comments.length + 1,
       text,
-      userID: user ? user.userID : null
     };
     this.comments.push(comment);
-    if (user) {
-      this.alertUser(user);
+    if (users.length) {
+      console.log(
+        `The users mentioned were ${users.map((u) => u.name).join(', ')}.`
+      );
     }
   }
 
-  detectUserMention(text: string): User | null {
-    const mentionPattern = /@(\w+)/;
-    const match = mentionPattern.exec(text);
-    if (match) {
+  detectUserMentions(text: string): User[] {
+    const mentionPattern = /@(\w+)/g;
+    let match;
+    const mentionedUsers: User[] = [];
+
+    while ((match = mentionPattern.exec(text)) !== null) {
       const userName = match[1];
-      return this.users.find(user => user.name.toLowerCase() === userName.toLowerCase()) || null;
+      const user = this.users.find(
+        (user) => user.name.toLowerCase() === userName.toLowerCase()
+      );
+      if (user) {
+        mentionedUsers.push(user);
+      }
     }
-    return null;
-  }
 
-  alertUser(user: User) {
-    alert(`User ${user.name} was mentioned!`);
+    return mentionedUsers;
   }
 }

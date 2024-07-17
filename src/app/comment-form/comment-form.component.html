@@ -1,5 +1,6 @@
 <form (submit)="addComment()">
   <input
+    id="commentInput"
     class="w-full md:w-1/2 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
     [(ngModel)]="newCommentText"
     (input)="onInput($event)"
@@ -12,9 +13,11 @@
     class="absolute bg-white border border-gray-300 mt-2 rounded-md shadow-lg max-h-40 overflow-y-auto"
   >
     <ul>
-      @for (user of filteredUsers; track filteredUsers) {
+      @for (user of filteredUsers; track user.userID) {
       <li
+        id="{{ user.userID }}"
         (click)="selectUser(user)"
+        [class.user-selected]="user.userID === activeUserID"
         class="px-4 py-2 cursor-pointer hover:bg-gray-200"
       >
         {{ user.name }}
