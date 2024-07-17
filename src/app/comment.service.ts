@@ -6,7 +6,7 @@ export interface Comment {
   userID: number | null;
 }
 
-interface User {
+export interface User {
   userID: number;
   name: string;
 }
@@ -25,6 +25,10 @@ export class CommentService {
 
   getComments() {
     return this.comments;
+  }
+
+  getUsers() {
+    return this.users;
   }
 
   addComment(text: string) {
