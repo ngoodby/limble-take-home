@@ -1,0 +1,5 @@
+<!-- reverse to put most recent comments at the top of the feed-->
+@for (comment of commentService.getComments().reverse(); track
+commentService.getComments()) {
+<p>{{ comment.text }}</p>
+}
