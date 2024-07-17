@@ -1,8 +1,9 @@
 <form (submit)="addComment()">
-  <input
-    [(ngModel)]="newCommentText"
-    name="comment"
-    placeholder="Add a comment"
-    required
-  />
+    <input
+      class="w-full md:w-1/2 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      [(ngModel)]="newCommentText"
+      name="comment"
+      placeholder="Add a comment"
+      required
+    />
 </form>
