@@ -33,28 +33,40 @@ export default class CommentFormComponent {
    */
   public onInput(event: any) {
     const value = event.target.value;
+    this.manageUserDropdown(value);
+    this.detectAndFilterUsers(value);
+  }
+
+  private manageUserDropdown(value: string) {
     const lastChar = value.slice(-1);
     if (lastChar === '@' && !this.showUserDropdown) {
-      this.showUserDropdown = true;
-      this.filteredUsers = this.users;
+      this.openUserDropdown();
     }
+  }
 
-    // Detect and filter users if typing after '@'
+  private openUserDropdown() {
+    this.showUserDropdown = true;
+    this.filteredUsers = this.users;
+  }
+
+  private detectAndFilterUsers(value: string) {
     const atIndex = value.lastIndexOf('@');
     if (atIndex !== -1) {
       const searchTerm = value.slice(atIndex + 1).toLowerCase();
       this.filteredUsers = this.users.filter(user =>
         user.name.toLowerCase().includes(searchTerm)
       );
-
-      // Close dropdown if a space is typed after '@'
-      if (value.slice(atIndex + 1).includes(' ')) {
-        this.showUserDropdown = false;
-      } else {
-        this.showUserDropdown = true;
-      }
+      this.closeDropdownIfSpaceTyped(value, atIndex);
     } else {
       this.showUserDropdown = false;
+    }
+  }
+
+  private closeDropdownIfSpaceTyped(value: string, atIndex: number) {
+    if (value.slice(atIndex + 1).includes(' ')) {
+      this.showUserDropdown = false;
+    } else {
+      this.showUserDropdown = true;
     }
   }
 
@@ -65,10 +77,17 @@ export default class CommentFormComponent {
    * @param {User} user
    */
   public selectUser(user: User) {
+    this.addMentionToComment(user);
+    this.showUserDropdown = false;
+    this.moveFocusToInput();
+  }
+
+  private addMentionToComment(user: User) {
     const atIndex = this.newCommentText.lastIndexOf('@');
     this.newCommentText = `${this.newCommentText.slice(0, atIndex + 1)}${user.name} `;
-    // Move cursor back to input field after selecting a user to tag.
-    this.showUserDropdown = false;
+  }
+
+  private moveFocusToInput() {
     const el = document.getElementById('commentInput');
     if (el) {
       el.focus();
