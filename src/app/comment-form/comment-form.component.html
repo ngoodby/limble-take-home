@@ -1,29 +1,26 @@
 <form (submit)="pushComment()">
   <input
     id="commentInput"
-    class="w-full md:w-1/2 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    class="w-full md:w-1/2 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:focus:ring-blue-300"
     [(ngModel)]="newCommentText"
     (input)="onInput($event)"
     name="comment"
     placeholder="Add a comment"
-    required
-  />
-  @if (showUserDropdown){
-  <div
-    class="absolute bg-white border border-gray-300 mt-2 rounded-md shadow-lg max-h-40 overflow-y-auto"
-  >
-    <ul>
-      @for (user of filteredUsers; track user.userID) {
-      <li
-        id="userID-{{ user.userID }}"
-        (click)="selectUser(user)"
-        [class.user-selected]="user.userID === activeUserID"
-        class="px-4 py-2 cursor-pointer hover:bg-gray-200"
-      >
-        {{ user.name }}
-      </li>
-      }
-    </ul>
-  </div>
+    required />
+  @if (showUserDropdown) {
+    <div
+      class="absolute bg-white border border-gray-300 mt-2 rounded-md shadow-lg max-h-40 overflow-y-auto dark:bg-gray-800 dark:border-gray-600">
+      <ul>
+        @for (user of filteredUsers; track user.userID) {
+          <li
+            id="userID-{{ user.userID }}"
+            (click)="selectUser(user)"
+            [class.user-selected]="user.userID === activeUserID"
+            class="px-4 py-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-white">
+            {{ user.name }}
+          </li>
+        }
+      </ul>
+    </div>
   }
 </form>
