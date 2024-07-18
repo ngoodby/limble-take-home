@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Use regex to identify mentioned within a comment and apply conditional formatting.
+ * Use regex to identify mentions within a comment and apply conditional formatting.
  *
  * @export
  * @class HighlightMentionsPipe
