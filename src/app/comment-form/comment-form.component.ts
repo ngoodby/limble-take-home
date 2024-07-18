@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Output,
   HostListener,
-  signal,
 } from '@angular/core';
 import { CommentService } from '../comment-service/comment.service';
 import { User } from '../comment-service/comment.types';
@@ -18,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export default class CommentFormComponent {
   @Output() commentAdded = new EventEmitter<string>();
-  newCommentText = signal('');
+  newCommentText = '';
   showUserDropdown = false;
   filteredUsers: User[] = [];
   users: User[] = [];
@@ -70,10 +69,8 @@ export default class CommentFormComponent {
    * @param {User} user
    */
   public selectUser(user: User) {
-    const atIndex = this.newCommentText().lastIndexOf('@');
-    this.newCommentText.set(
-      `${this.newCommentText().slice(0, atIndex + 1)}${user.name} `,
-    );
+    const atIndex = this.newCommentText.lastIndexOf('@');
+    this.newCommentText=`${this.newCommentText.slice(0, atIndex + 1)}${user.name} `
     // Move cursor back to input field after selecting a user to tag.
     this.showUserDropdown = false;
     const el = document.getElementById('commentInput');
@@ -85,9 +82,9 @@ export default class CommentFormComponent {
   /** Use the CommentService method pushComment to push a comment to the array of comments.*/
   public pushComment() {
     // Don't push a new comment if the input is just spaces.
-    if (this.newCommentText().trim()) {
-      this.commentService.addComment(this.newCommentText());
-      this.newCommentText.set('');
+    if (this.newCommentText.trim()) {
+      this.commentService.addComment(this.newCommentText);
+      this.newCommentText = '';
     }
   }
 
