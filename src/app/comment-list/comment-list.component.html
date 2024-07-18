@@ -7,7 +7,7 @@
     <div class="mr-4">
       <fa-icon [icon]="faComment"></fa-icon>
     </div>
-    <span [innerHTML]="comment.text | highlightMentions"></span>
+    <span class="break-all" [innerHTML]="comment.text | highlightMentions"></span>
   </div>
 </div>
 }
