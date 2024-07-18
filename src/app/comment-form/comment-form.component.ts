@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  HostListener,
+  signal,
+} from '@angular/core';
 import { CommentService } from '../comment-service/comment.service';
 import { User } from '../comment-service/comment.types';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 })
 export default class CommentFormComponent {
   @Output() commentAdded = new EventEmitter<string>();
-  newCommentText = '';
+  newCommentText = signal('');
   showUserDropdown = false;
   filteredUsers: User[] = [];
   users: User[] = [];
@@ -27,9 +33,10 @@ export default class CommentFormComponent {
    * menu of potential mentions and filters the list of potential mentions as the
    * user types beyond the '@'.
    *
+   * @public
    * @param {*} event
    */
-  onInput(event: any) {
+  public onInput(event: any) {
     const value = event.target.value;
     const lastChar = value.slice(-1);
     if (lastChar === '@' && !this.showUserDropdown) {
@@ -42,7 +49,7 @@ export default class CommentFormComponent {
     if (atIndex !== -1) {
       const searchTerm = value.slice(atIndex + 1).toLowerCase();
       this.filteredUsers = this.users.filter((user) =>
-        user.name.toLowerCase().includes(searchTerm)
+        user.name.toLowerCase().includes(searchTerm),
       );
 
       // Close dropdown if a space is typed after '@'
@@ -59,13 +66,14 @@ export default class CommentFormComponent {
   /**
    * Identify the target mention, close mention dropdown, and move focus back to the input.
    *
+   * @public
    * @param {User} user
    */
-  selectUser(user: User) {
-    const atIndex = this.newCommentText.lastIndexOf('@');
-    this.newCommentText = `${this.newCommentText.slice(0, atIndex + 1)}${
-      user.name
-    } `;
+  public selectUser(user: User) {
+    const atIndex = this.newCommentText().lastIndexOf('@');
+    this.newCommentText.set(
+      `${this.newCommentText().slice(0, atIndex + 1)}${user.name} `,
+    );
     // Move cursor back to input field after selecting a user to tag.
     this.showUserDropdown = false;
     const el = document.getElementById('commentInput');
@@ -74,12 +82,12 @@ export default class CommentFormComponent {
     }
   }
 
-  /** Use the CommentService method addComment to push a comment to the array of comments.*/
-  addComment() {
+  /** Use the CommentService method pushComment to push a comment to the array of comments.*/
+  public pushComment() {
     // Don't push a new comment if the input is just spaces.
-    if (this.newCommentText.trim()) {
-      this.commentService.addComment(this.newCommentText);
-      this.newCommentText = '';
+    if (this.newCommentText().trim()) {
+      this.commentService.addComment(this.newCommentText());
+      this.newCommentText.set('');
     }
   }
 
@@ -90,7 +98,7 @@ export default class CommentFormComponent {
    * @param {KeyboardEvent} event
    */
   @HostListener('document:keydown', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
+  public handleKeyDown(event: KeyboardEvent) {
     if (this.showUserDropdown) {
       if (
         event.key === 'ArrowDown' ||
@@ -110,7 +118,7 @@ export default class CommentFormComponent {
         event.preventDefault();
         if (this.activeUserID !== null) {
           const selectedUser = this.filteredUsers.find(
-            (user) => user.userID === this.activeUserID
+            (user) => user.userID === this.activeUserID,
           );
           if (selectedUser) {
             this.selectUser(selectedUser);
@@ -134,7 +142,7 @@ export default class CommentFormComponent {
       return;
     }
     const currentIndex = this.filteredUsers.findIndex(
-      (user) => user.userID === this.activeUserID
+      (user) => user.userID === this.activeUserID,
     );
     let nextIndex: number;
     if (direction === 'down') {
