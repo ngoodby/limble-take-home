@@ -30,6 +30,12 @@ export class CommentService {
     return this.users;
   }
 
+  /**
+   * Add a comment to the comments array. Detects mentions within the comment to
+   * allow for any desired side effects to be triggered.
+   *
+   * @param {string} text
+   */
   addComment(text: string) {
     const users = this.detectUserMentions(text);
     const comment: Comment = {
@@ -44,6 +50,12 @@ export class CommentService {
     }
   }
 
+  /**
+   * Detect mentions within a comment.
+   *
+   * @param {string} text
+   * @returns {User[]}
+   */
   detectUserMentions(text: string): User[] {
     const mentionPattern = /@(\w+)/g;
     let match;

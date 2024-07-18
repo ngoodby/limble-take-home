@@ -2,12 +2,12 @@
 @for (comment of commentService.getComments().reverse(); track comment) {
 <div class="py-2">
   <div
-    class="flex items-start w-full md:w-1/2 rounded overflow-visible shadow-md bg-white p-2 text-gray-700"
+    class="flex items-center w-full md:w-1/2 rounded overflow-visible shadow-md bg-white p-2 text-gray-700"
   >
     <div class="mr-4">
       <fa-icon [icon]="faComment"></fa-icon>
     </div>
-    {{ comment.text }}
+    <span [innerHTML]="comment.text | highlightMentions"></span>
   </div>
 </div>
 }
