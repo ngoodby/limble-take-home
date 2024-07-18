@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, HostListener } from '@angular/core';
-import { CommentService, User } from '../comment.service';
+import { CommentService } from '../comment-service/comment.service';
+import { User } from '../comment-service/comment.types';
 import { FormsModule } from '@angular/forms';
 
 @Component({
