@@ -11,6 +11,8 @@ export class CommentService {
     { userID: 2, name: 'Jeff' },
     { userID: 3, name: 'Bryan' },
     { userID: 4, name: 'Gabbey' },
+    {userID: 5, name: 'Linh'},
+    {userID: 6, name: 'Erin'}
   ];
 
   getComments() {

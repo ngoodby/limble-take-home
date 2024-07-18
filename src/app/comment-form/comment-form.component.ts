@@ -151,5 +151,13 @@ export default class CommentFormComponent {
         this.filteredUsers.length;
     }
     this.activeUserID = this.filteredUsers[nextIndex].userID;
+    this.scrollActiveUserIntoView()
+  }
+
+  private scrollActiveUserIntoView() {
+    const activeElement = document.getElementById(`userID-${this.activeUserID}`);
+    if (activeElement) {
+      activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 }

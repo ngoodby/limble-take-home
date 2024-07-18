@@ -15,7 +15,7 @@
     <ul>
       @for (user of filteredUsers; track user.userID) {
       <li
-        id="{{ user.userID }}"
+        id="userID-{{ user.userID }}"
         (click)="selectUser(user)"
         [class.user-selected]="user.userID === activeUserID"
         class="px-4 py-2 cursor-pointer hover:bg-gray-200"
