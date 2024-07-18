@@ -9,6 +9,5 @@ import CommentListComponent from './comment-list/comment-list.component';
   standalone: true,
   imports: [RouterOutlet, CommentFormComponent, CommentListComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {}

@@ -8,7 +8,6 @@ import { HighlightMentionsPipe } from '../highlight-mentions.pipe';
 @Component({
   selector: 'comment-list',
   templateUrl: './comment-list.component.html',
-  styleUrls: ['./comment-list.component.css'],
   standalone: true,
   imports: [FontAwesomeModule, HighlightMentionsPipe],
 })
