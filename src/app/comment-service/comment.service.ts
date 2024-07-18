@@ -16,11 +16,11 @@ export class CommentService {
     { userID: 6, name: 'Erin' },
   ];
 
-  getComments() {
+  public getComments() {
     return this.comments;
   }
 
-  getUsers() {
+  public getUsers() {
     return this.users;
   }
 
@@ -28,9 +28,10 @@ export class CommentService {
    * Add a comment to the comments array. Detects mentions within the comment to
    * allow for any desired side effects to be triggered.
    *
+   * @public
    * @param {string} text
    */
-  addComment(text: string) {
+  public addComment(text: string) {
     const users = this.detectUserMentions(text);
     const comment: Comment = {
       id: this.comments.length + 1,
@@ -47,10 +48,11 @@ export class CommentService {
   /**
    * Detect mentions within a comment.
    *
+   * @private
    * @param {string} text
    * @returns {User[]}
    */
-  detectUserMentions(text: string): User[] {
+  private detectUserMentions(text: string): User[] {
     const mentionPattern = /@(\w+)/g;
     let match;
     const mentionedUsers: User[] = [];
