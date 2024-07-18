@@ -5,7 +5,7 @@ import { CommentService } from '../comment-service/comment.service';
 import { User } from '../comment-service/comment.types';
 
 @Component({
-  selector: 'comment-form',
+  selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.css'],
   imports: [FormsModule],

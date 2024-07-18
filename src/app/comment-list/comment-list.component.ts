@@ -6,7 +6,7 @@ import { CommentService } from '../comment-service/comment.service';
 import { HighlightMentionsPipe } from '../highlight-mentions.pipe';
 
 @Component({
-  selector: 'comment-list',
+  selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
   standalone: true,
   imports: [FontAwesomeModule, HighlightMentionsPipe],
