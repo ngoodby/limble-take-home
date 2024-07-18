@@ -3,20 +3,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import CommentFormComponent from './comment-form.component';
 
 describe('CommentFormComponent', () => {
-	let component: CommentFormComponent;
-	let fixture: ComponentFixture<CommentFormComponent>;
+  let component: CommentFormComponent;
+  let fixture: ComponentFixture<CommentFormComponent>;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [CommentFormComponent],
-		}).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CommentFormComponent],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(CommentFormComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+    fixture = TestBed.createComponent(CommentFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

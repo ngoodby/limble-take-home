@@ -17,7 +17,7 @@ export class HighlightMentionsPipe implements PipeTransform {
     const mentionRegex = /@(\w+)/g;
     return value.replace(
       mentionRegex,
-      '<span class="text-blue-500 rounded-md px-1 bg-blue-100 font-bold">@$1</span>',
+      '<span class="text-blue-500 rounded-md px-1 bg-blue-100 font-bold">@$1</span>'
     );
   }
 }

@@ -1,9 +1,9 @@
 export interface Comment {
-	id: number;
-	text: string;
+  id: number;
+  text: string;
 }
 
 export interface User {
-	userID: number;
-	name: string;
+  userID: number;
+  name: string;
 }

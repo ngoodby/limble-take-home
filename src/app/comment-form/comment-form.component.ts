@@ -1,12 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  HostListener,
-} from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 import { CommentService } from '../comment-service/comment.service';
 import { User } from '../comment-service/comment.types';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'comment-form',
@@ -47,8 +43,8 @@ export default class CommentFormComponent {
     const atIndex = value.lastIndexOf('@');
     if (atIndex !== -1) {
       const searchTerm = value.slice(atIndex + 1).toLowerCase();
-      this.filteredUsers = this.users.filter((user) =>
-        user.name.toLowerCase().includes(searchTerm),
+      this.filteredUsers = this.users.filter(user =>
+        user.name.toLowerCase().includes(searchTerm)
       );
 
       // Close dropdown if a space is typed after '@'
@@ -70,7 +66,7 @@ export default class CommentFormComponent {
    */
   public selectUser(user: User) {
     const atIndex = this.newCommentText.lastIndexOf('@');
-    this.newCommentText=`${this.newCommentText.slice(0, atIndex + 1)}${user.name} `
+    this.newCommentText = `${this.newCommentText.slice(0, atIndex + 1)}${user.name} `;
     // Move cursor back to input field after selecting a user to tag.
     this.showUserDropdown = false;
     const el = document.getElementById('commentInput');
@@ -115,7 +111,7 @@ export default class CommentFormComponent {
         event.preventDefault();
         if (this.activeUserID !== null) {
           const selectedUser = this.filteredUsers.find(
-            (user) => user.userID === this.activeUserID,
+            user => user.userID === this.activeUserID
           );
           if (selectedUser) {
             this.selectUser(selectedUser);
@@ -139,7 +135,7 @@ export default class CommentFormComponent {
       return;
     }
     const currentIndex = this.filteredUsers.findIndex(
-      (user) => user.userID === this.activeUserID,
+      user => user.userID === this.activeUserID
     );
     let nextIndex: number;
     if (direction === 'down') {
@@ -151,11 +147,13 @@ export default class CommentFormComponent {
         this.filteredUsers.length;
     }
     this.activeUserID = this.filteredUsers[nextIndex].userID;
-    this.scrollActiveUserIntoView()
+    this.scrollActiveUserIntoView();
   }
 
   private scrollActiveUserIntoView() {
-    const activeElement = document.getElementById(`userID-${this.activeUserID}`);
+    const activeElement = document.getElementById(
+      `userID-${this.activeUserID}`
+    );
     if (activeElement) {
       activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }

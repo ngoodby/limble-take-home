@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User, Comment } from './comment.types';
+
+import { Comment, User } from './comment.types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ export class CommentService {
     { userID: 2, name: 'Jeff' },
     { userID: 3, name: 'Bryan' },
     { userID: 4, name: 'Gabbey' },
-    {userID: 5, name: 'Linh'},
-    {userID: 6, name: 'Erin'}
+    { userID: 5, name: 'Linh' },
+    { userID: 6, name: 'Erin' },
   ];
 
   getComments() {
@@ -38,7 +39,7 @@ export class CommentService {
     this.comments.push(comment);
     if (users.length) {
       console.log(
-        `The users mentioned were ${users.map((u) => u.name).join(', ')}.`,
+        `The users mentioned were ${users.map(u => u.name).join(', ')}.`
       );
     }
   }
@@ -57,7 +58,7 @@ export class CommentService {
     while ((match = mentionPattern.exec(text)) !== null) {
       const userName = match[1];
       const user = this.users.find(
-        (user) => user.name.toLowerCase() === userName.toLowerCase(),
+        user => user.name.toLowerCase() === userName.toLowerCase()
       );
       if (user) {
         mentionedUsers.push(user);

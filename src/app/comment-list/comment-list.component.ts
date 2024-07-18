@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { CommentService } from '../comment-service/comment.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
+
+import { CommentService } from '../comment-service/comment.service';
 import { HighlightMentionsPipe } from '../highlight-mentions.pipe';
 
 @Component({
