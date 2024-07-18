@@ -11,7 +11,9 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "format": "npm run prettier && npm run eslint",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "clean": "rm -rf node_modules",
+    "reinstall": "npm run clean && npm install"
   },
   "private": true,
   "dependencies": {
