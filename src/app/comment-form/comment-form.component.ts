@@ -31,8 +31,9 @@ export default class CommentFormComponent {
    * @public
    * @param {*} event
    */
-  public onInput(event: any) {
-    const value = event.target.value;
+  public onInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
     this._manageUserDropdown(value);
     this._detectAndFilterUsers(value);
   }

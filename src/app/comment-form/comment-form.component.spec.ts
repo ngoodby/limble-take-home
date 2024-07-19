@@ -36,11 +36,22 @@ describe('CommentFormComponent', () => {
 
   it('should toggle showUserDropdown as expected', () => {
     component.newCommentText = 'Hello @';
-    component.onInput({ target: { value: 'Hello @' } });
+    const mockEvent1 = {
+      target: {
+        value: 'Hello @',
+      },
+    } as unknown as Event;
+    component.onInput(mockEvent1);
     expect(component.showUserDropdown).toBeTrue();
 
     component.newCommentText = 'Hello';
-    component.onInput({ target: { value: 'Hello' } });
+    const mockEvent2 = {
+      target: {
+        value: 'Hello',
+      },
+    } as unknown as Event;
+
+    component.onInput(mockEvent2);
     expect(component.showUserDropdown).toBeFalse();
   });
 
