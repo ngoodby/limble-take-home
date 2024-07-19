@@ -126,6 +126,9 @@ export default class CommentFormComponent {
       ) {
         event.preventDefault();
         this.moveSelection('up');
+      } else if (event.key === 'Escape') {
+        this.activeUserID = null;
+        this.showUserDropdown = false;
       } else if (event.key === 'Enter') {
         event.preventDefault();
         if (this.activeUserID !== null) {
