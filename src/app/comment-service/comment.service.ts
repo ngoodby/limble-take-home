@@ -32,7 +32,7 @@ export class CommentService {
    * @param {string} text
    */
   public addComment(text: string) {
-    const users = this.detectUserMentions(text);
+    const users = this._detectUserMentions(text);
     const comment: Comment = {
       id: this.comments.length + 1,
       text,
@@ -52,7 +52,7 @@ export class CommentService {
    * @param {string} text
    * @returns {User[]}
    */
-  private detectUserMentions(text: string): User[] {
+  private _detectUserMentions(text: string): User[] {
     const mentionPattern = /@(\w+)/g;
     let match;
     const mentionedUsers: User[] = [];

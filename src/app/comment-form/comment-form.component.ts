@@ -33,36 +33,36 @@ export default class CommentFormComponent {
    */
   public onInput(event: any) {
     const value = event.target.value;
-    this.manageUserDropdown(value);
-    this.detectAndFilterUsers(value);
+    this._manageUserDropdown(value);
+    this._detectAndFilterUsers(value);
   }
 
-  private manageUserDropdown(value: string) {
+  private _manageUserDropdown(value: string) {
     const lastChar = value.slice(-1);
     if (lastChar === '@' && !this.showUserDropdown) {
-      this.openUserDropdown();
+      this._openUserDropdown();
     }
   }
 
-  private openUserDropdown() {
+  private _openUserDropdown() {
     this.showUserDropdown = true;
     this.filteredUsers = this.users;
   }
 
-  private detectAndFilterUsers(value: string) {
+  private _detectAndFilterUsers(value: string) {
     const atIndex = value.lastIndexOf('@');
     if (atIndex !== -1) {
       const searchTerm = value.slice(atIndex + 1).toLowerCase();
       this.filteredUsers = this.users.filter(user =>
         user.name.toLowerCase().includes(searchTerm)
       );
-      this.closeDropdownIfSpaceTyped(value, atIndex);
+      this._closeDropdownIfSpaceTyped(value, atIndex);
     } else {
       this.showUserDropdown = false;
     }
   }
 
-  private closeDropdownIfSpaceTyped(value: string, atIndex: number) {
+  private _closeDropdownIfSpaceTyped(value: string, atIndex: number) {
     if (value.slice(atIndex + 1).includes(' ')) {
       this.showUserDropdown = false;
     } else {
@@ -77,17 +77,17 @@ export default class CommentFormComponent {
    * @param {User} user
    */
   public selectUser(user: User) {
-    this.addMentionToComment(user);
+    this._addMentionToComment(user);
     this.showUserDropdown = false;
-    this.moveFocusToInput();
+    this._moveFocusToInput();
   }
 
-  private addMentionToComment(user: User) {
+  private _addMentionToComment(user: User) {
     const atIndex = this.newCommentText.lastIndexOf('@');
     this.newCommentText = `${this.newCommentText.slice(0, atIndex + 1)}${user.name} `;
   }
 
-  private moveFocusToInput() {
+  private _moveFocusToInput() {
     const el = document.getElementById('commentInput');
     if (el) {
       el.focus();
@@ -118,14 +118,14 @@ export default class CommentFormComponent {
         (event.key === 'Tab' && !event.shiftKey)
       ) {
         event.preventDefault();
-        this.moveSelection('down');
+        this._moveSelection('down');
       } else if (
         event.key === 'ArrowUp' ||
         event.key === 'ArrowLeft' ||
         (event.key === 'Tab' && event.shiftKey)
       ) {
         event.preventDefault();
-        this.moveSelection('up');
+        this._moveSelection('up');
       } else if (event.key === 'Escape') {
         this.activeUserID = null;
         this.showUserDropdown = false;
@@ -152,7 +152,7 @@ export default class CommentFormComponent {
    * @private
    * @param {('up' | 'down')} direction
    */
-  private moveSelection(direction: 'up' | 'down') {
+  private _moveSelection(direction: 'up' | 'down') {
     if (this.filteredUsers.length === 0) {
       return;
     }
@@ -169,10 +169,10 @@ export default class CommentFormComponent {
         this.filteredUsers.length;
     }
     this.activeUserID = this.filteredUsers[nextIndex].userID;
-    this.scrollActiveUserIntoView();
+    this._scrollActiveUserIntoView();
   }
 
-  private scrollActiveUserIntoView() {
+  private _scrollActiveUserIntoView() {
     const activeElement = document.getElementById(
       `userID-${this.activeUserID}`
     );
