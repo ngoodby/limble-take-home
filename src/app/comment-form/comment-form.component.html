@@ -1,6 +1,7 @@
 <form class="p-4" (submit)="pushComment()">
   <textarea
     id="commentInput"
+    rows="1"
     class="w-full resize md:w-1/2 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:text-white dark:focus:ring-blue-300 dark:bg-gray-900"
     [(ngModel)]="newCommentText"
     (input)="onInput($event)"
