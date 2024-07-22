@@ -14,7 +14,6 @@ import { User } from '../comment-service/comment.types';
 export default class CommentFormComponent {
   @Output() commentAdded = new EventEmitter<string>();
   newCommentText = '';
-  showUserDropdown = false;
   filteredUsers: User[] = [];
   users: User[] = [];
   activeUserID: number | null = null;
@@ -40,13 +39,14 @@ export default class CommentFormComponent {
 
   private _manageUserDropdown(value: string) {
     const lastChar = value.slice(-1);
-    if (lastChar === '@' && !this.showUserDropdown) {
+    if (lastChar === '@') {
       this._openUserDropdown();
     }
   }
 
   private _openUserDropdown() {
-    this.showUserDropdown = true;
+    const d = document.getElementById('commentDialog') as HTMLDialogElement;
+    d.show();
     this.filteredUsers = this.users;
   }
 
@@ -59,15 +59,17 @@ export default class CommentFormComponent {
       );
       this._closeDropdownIfSpaceTyped(value, atIndex);
     } else {
-      this.showUserDropdown = false;
+      const d = document.getElementById('commentDialog') as HTMLDialogElement;
+      d.close();
     }
   }
 
   private _closeDropdownIfSpaceTyped(value: string, atIndex: number) {
+    const d = document.getElementById('commentDialog') as HTMLDialogElement;
     if (value.slice(atIndex + 1).includes(' ')) {
-      this.showUserDropdown = false;
+      d.close();
     } else {
-      this.showUserDropdown = true;
+      d.show();
     }
   }
 
@@ -78,8 +80,9 @@ export default class CommentFormComponent {
    * @param {User} user
    */
   public selectUser(user: User) {
+    const d = document.getElementById('commentDialog') as HTMLDialogElement;
     this._addMentionToComment(user);
-    this.showUserDropdown = false;
+    d.close();
     this._moveFocusToInput();
   }
 
@@ -112,81 +115,16 @@ export default class CommentFormComponent {
    */
   @HostListener('document:keydown', ['$event'])
   public handleKeyDown(event: KeyboardEvent) {
-    if (this.showUserDropdown) {
-      if (
-        event.key === 'ArrowDown' ||
-        event.key === 'ArrowRight' ||
-        (event.key === 'Tab' && !event.shiftKey)
-      ) {
-        event.preventDefault();
-        this._moveSelection('down');
-      } else if (
-        event.key === 'ArrowUp' ||
-        event.key === 'ArrowLeft' ||
-        (event.key === 'Tab' && event.shiftKey)
-      ) {
-        event.preventDefault();
-        this._moveSelection('up');
-      } else if (event.key === 'Escape') {
-        this.activeUserID = null;
-        this.showUserDropdown = false;
-      } else if (event.key === 'Enter') {
-        event.preventDefault();
-        if (this.activeUserID !== null) {
-          const selectedUser = this.filteredUsers.find(
-            user => user.userID === this.activeUserID
-          );
-          if (selectedUser) {
-            this.selectUser(selectedUser);
-          }
-        }
-        // Reset the activeUserID once the mention is selected.
-        this.activeUserID = null;
-      }
-    } else {
+    const d = document.getElementById('commentDialog') as HTMLDialogElement;
+    if (!d.open) {
       if (
         (event.key === 'Enter' && event.shiftKey) ||
         (event.key === 'Enter' && event.ctrlKey)
       ) {
         event.preventDefault();
+        d.close();
         this.pushComment();
       }
-    }
-  }
-
-  /**
-   * Helper function to update the activeUserID to keep track of which target mention
-   * the user is highlighting in the dropdown.
-   *
-   * @private
-   * @param {('up' | 'down')} direction
-   */
-  private _moveSelection(direction: 'up' | 'down') {
-    if (this.filteredUsers.length === 0) {
-      return;
-    }
-    const currentIndex = this.filteredUsers.findIndex(
-      user => user.userID === this.activeUserID
-    );
-    let nextIndex: number;
-    if (direction === 'down') {
-      nextIndex = (currentIndex + 1) % this.filteredUsers.length;
-    } else {
-      // 'up'
-      nextIndex =
-        (currentIndex - 1 + this.filteredUsers.length) %
-        this.filteredUsers.length;
-    }
-    this.activeUserID = this.filteredUsers[nextIndex].userID;
-    this._scrollActiveUserIntoView();
-  }
-
-  private _scrollActiveUserIntoView() {
-    const activeElement = document.getElementById(
-      `userID-${this.activeUserID}`
-    );
-    if (activeElement) {
-      activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
 }
