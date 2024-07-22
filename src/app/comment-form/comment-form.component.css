@@ -1,3 +1,10 @@
 .user-selected {
-  background-color: #93b9e0; /* Light blue background color */
+  background-color: #c2d7ed;
+}
+
+/* Style for user-selected elements in dark mode */
+@media (prefers-color-scheme: dark) {
+  .user-selected {
+    background-color: #15477c;
+  }
 }
