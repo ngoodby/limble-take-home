@@ -189,4 +189,25 @@ export default class CommentFormComponent {
       activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
+
+  /**
+   * Close user dropdown menu when user clicks outside of it.
+   *
+   * @param {MouseEvent} event
+   */
+  @HostListener('document:click', ['$event'])
+  public clickOutsideDropdown(event: MouseEvent) {
+    const userDropdown = document.getElementById('userDropdown');
+    if (userDropdown) {
+      const dropdownDimensions = userDropdown.getBoundingClientRect();
+      if (
+        event.clientX < dropdownDimensions.left ||
+        event.clientX > dropdownDimensions.right ||
+        event.clientY < dropdownDimensions.top ||
+        event.clientY > dropdownDimensions.bottom
+      ) {
+        this.showUserDropdown = false;
+      }
+    }
+  }
 }

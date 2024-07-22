@@ -10,8 +10,10 @@
     required></textarea>
   @if (showUserDropdown) {
     <div
+      id="userDropdown"
       class="absolute bg-white border border-gray-300 mt-2 rounded-md shadow-lg max-h-40 overflow-y-auto dark:bg-gray-800 dark:border-gray-600">
-      <ul>
+      <ul
+      >
         @for (user of filteredUsers; track user.userID) {
           <li
             id="userID-{{ user.userID }}"
