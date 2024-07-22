@@ -143,6 +143,11 @@ export default class CommentFormComponent {
         // Reset the activeUserID once the mention is selected.
         this.activeUserID = null;
       }
+    } else {
+      if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        this.pushComment();
+      }
     }
   }
 
