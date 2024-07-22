@@ -6,8 +6,8 @@ import { Comment, User } from './comment.types';
   providedIn: 'root',
 })
 export class CommentService {
-  private comments: Comment[] = [];
-  private users: User[] = [
+  private _comments: Comment[] = [];
+  private _users: User[] = [
     { userID: 1, name: 'Kevin' },
     { userID: 2, name: 'Jeff' },
     { userID: 3, name: 'Bryan' },
@@ -17,11 +17,11 @@ export class CommentService {
   ];
 
   public getComments() {
-    return this.comments;
+    return this._comments;
   }
 
   public getUsers() {
-    return this.users;
+    return this._users;
   }
 
   /**
@@ -34,10 +34,10 @@ export class CommentService {
   public addComment(text: string) {
     const users = this._detectUserMentions(text);
     const comment: Comment = {
-      id: this.comments.length + 1,
+      id: this._comments.length + 1,
       text,
     };
-    this.comments.push(comment);
+    this._comments.push(comment);
     if (users.length) {
       console.log(
         `The users mentioned were ${users.map(u => u.name).join(', ')}.`
@@ -59,7 +59,7 @@ export class CommentService {
 
     while ((match = mentionPattern.exec(text)) !== null) {
       const userName = match[1];
-      const user = this.users.find(
+      const user = this._users.find(
         user => user.name.toLowerCase() === userName.toLowerCase()
       );
       if (user) {
