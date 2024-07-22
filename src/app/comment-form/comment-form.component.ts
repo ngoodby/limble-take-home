@@ -144,7 +144,10 @@ export default class CommentFormComponent {
         this.activeUserID = null;
       }
     } else {
-      if (event.key === 'Enter' && event.shiftKey) {
+      if (
+        (event.key === 'Enter' && event.shiftKey) ||
+        (event.key === 'Enter' && event.ctrlKey)
+      ) {
         event.preventDefault();
         this.pushComment();
       }
