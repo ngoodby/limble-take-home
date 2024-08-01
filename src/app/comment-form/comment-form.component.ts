@@ -40,7 +40,12 @@ export default class CommentFormComponent {
 
   private _manageUserDropdown(value: string) {
     const lastChar = value.slice(-1);
-    if (lastChar === '@' && !this.showUserDropdown) {
+    const secondLastChar = value.slice(-2, -1);
+    if (
+      lastChar === '@' &&
+      (secondLastChar === ' ' || secondLastChar === '') &&
+      !this.showUserDropdown
+    ) {
       this._openUserDropdown();
     }
   }
@@ -66,8 +71,6 @@ export default class CommentFormComponent {
   private _closeDropdownIfSpaceTyped(value: string, atIndex: number) {
     if (value.slice(atIndex + 1).includes(' ')) {
       this.showUserDropdown = false;
-    } else {
-      this.showUserDropdown = true;
     }
   }
 
